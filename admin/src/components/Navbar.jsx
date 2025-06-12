@@ -6,13 +6,15 @@ import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
 
+  const { dToken, setDToken } = useContext(DoctorContext)
   const { aToken, setAToken } = useContext(AdminContext)
 
   const navigate = useNavigate()
 
   const logout = () => {
     navigate('/')
-
+    dToken && setDToken('')
+    dToken && localStorage.removeItem('dToken')
     aToken && setAToken('')
     aToken && localStorage.removeItem('aToken')
   }

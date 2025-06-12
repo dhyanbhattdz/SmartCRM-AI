@@ -19,7 +19,7 @@ const AddDoctor = () => {
   const [address1, setAddress1] = useState('')
   const [address2, setAddress2] = useState('')
 
-  const { backendUrl } = useContext(AppContext)
+  const { backendUrl } = useContext(AdminContext)
   const { aToken } = useContext(AdminContext)
 
   const onSubmitHandler = async (event) => {
@@ -49,34 +49,28 @@ const AddDoctor = () => {
       });
 
       const response = await axios.post(`${backendUrl}/api/admin/add-doctor`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          aToken: aToken
-        }
-      });
-
-      const data = response.data;
-
+        headers: { aToken}  })
+      const data= response.data;
       if (data.success) {
-        toast.success(data.message);
-        setDocImg(false);
-        setName('');
-        setPassword('');
-        setEmail('');
-        setAddress1('');
-        setAddress2('');
-        setDegree('');
-        setAbout('');
-        setFees('');
-      } else {
-        toast.error(data.message);
-      }
+                toast.success(data.message)
+                setDocImg(false)
+                setName('')
+                setPassword('')
+                setEmail('')
+                setAddress1('')
+                setAddress2('')
+                setDegree('')
+                setAbout('')
+                setFees('')
+            } else {
+                toast.error(data.message)
+            }
 
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message);
       console.error(error);
     }
-  };
+  }
 
 
   return (

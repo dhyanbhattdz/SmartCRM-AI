@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { AppContext } from './context/AppContext'
 import { assets } from './assets/assets'
 import RelatedDoctors from './components/RelatedDoctors'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const Appointment = () => {
   const { docId } = useParams()
-  const { doctors, currencySymbol } = useContext(AppContext)
+  const navigate = useNavigate()
+  const { doctors, currencySymbol, backendUrl, token, getDoctorsData } = useContext(AppContext)
   const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 
   const [docInfo, setDocInfo] = useState(null)
@@ -75,12 +78,37 @@ const Appointment = () => {
     }
   }
 
-  const bookAppointment = () => {
-    if (!slotTime) {
-      alert("Please select a time slot before booking.")
-      return
+  const bookAppointment = async () => {
+
+    if (!token) {
+      toast.warning('Login to book appointment')
+      return navigate('/login')
     }
-    alert(`Booked appointment with ${docInfo.name} at ${slotTime}`)
+
+    const date = docSlots[slotIndex][0].datetime
+  
+    let day = date.getDate()
+    let month = date.getMonth() + 1
+    let year = date.getFullYear()
+
+    const slotDate = day + "_" + month + "_" + year
+
+    try {
+
+      const { data } = await axios.post(backendUrl + '/api/user/book-appointment', { docId, slotDate, slotTime }, { headers: { token } })
+      if (data.success) {
+        toast.success(data.message)
+        getDoctorsData()
+        navigate('/my-appointments')
+      } else {
+        toast.error(data.message)
+      }
+
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+    }
+
   }
 
   useEffect(() => {
@@ -134,9 +162,8 @@ const Appointment = () => {
                 <div
                   onClick={() => setSlotIndex(index)}
                   key={index}
-                  className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${
-                    slotIndex === index ? 'bg-primary text-white' : 'border border-[#DDDDDD]'
-                  }`}
+                  className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex === index ? 'bg-primary text-white' : 'border border-[#DDDDDD]'
+                    }`}
                 >
                   <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
                   <p>{item[0] && item[0].datetime.getDate()}</p>
@@ -152,11 +179,10 @@ const Appointment = () => {
                 <p
                   onClick={() => setSlotTime(item.time)}
                   key={index}
-                  className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${
-                    item.time === slotTime
+                  className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${item.time === slotTime
                       ? 'bg-primary text-white'
                       : 'text-[#949494] border border-[#B4B4B4]'
-                  }`}
+                    }`}
                 >
                   {item.time.toLowerCase()}
                 </p>
