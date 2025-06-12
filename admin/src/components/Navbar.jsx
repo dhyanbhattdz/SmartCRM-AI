@@ -19,8 +19,12 @@ const Navbar = () => {
   }
 
   const goToUserPanel = () => {
-    window.location.href = 'https://your-user-panel.vercel.app' // 🔁 Replace with your actual user panel URL
+    window.location.href = 'https://appointy-six.vercel.app/'
   }
+
+  const isOnDashboard =
+    location.pathname === '/admin-dashboard' ||
+    location.pathname === '/doctor-dashboard'
 
   return (
     <div className='flex justify-between items-center px-4 sm:px-10 py-3 border-b bg-white'>
@@ -31,16 +35,16 @@ const Navbar = () => {
           onClick={() => navigate('/')}
           className='w-36 sm:w-40 cursor-pointer'
           src={assets.admin_logo}
-          alt=""
+          alt="Logo"
         />
 
-        {/* Admin/Doctor label */}
+        {/* Role Label */}
         <p className='border px-2.5 py-0.5 rounded-full border-gray-500 text-gray-600'>
           {aToken ? 'Admin' : 'Doctor'}
         </p>
 
-        {/* Show User Panel button only on /dashboard */}
-        {location.pathname === '/dashboard' && (
+        {/* User Panel Button (visible on both dashboards) */}
+        {isOnDashboard && (
           <button
             onClick={goToUserPanel}
             className='ml-2 text-white bg-primary hover:bg-gray-700 px-3 py-1.5 rounded-full text-xs'
