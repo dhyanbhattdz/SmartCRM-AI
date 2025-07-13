@@ -1,0 +1,8 @@
+Django>=3.2,<5
+djangorestframework
+matplotlib
+requests
+beautifulsoup4
+scikit-learn
+joblib
+gunicorn

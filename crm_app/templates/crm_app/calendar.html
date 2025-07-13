@@ -1,0 +1,24 @@
+{% extends 'crm_app/base.html' %}
+
+{% block title %}Lead Follow-Up Calendar{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">📅 Follow-Up Calendar</h2>
+<div id='calendar'></div>
+
+<!-- FullCalendar CDN -->
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      height: 650,
+      events: {{ events|safe }}
+    });
+    calendar.render();
+  });
+</script>
+{% endblock %}

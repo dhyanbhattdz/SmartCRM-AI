@@ -1,0 +1,31 @@
+{% extends 'crm_app/base.html' %}
+{% block title %}Lead Predictor{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Lead Conversion Predictor</h2>
+
+  {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+
+  <form method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label>Follow-up Days</label>
+      <input type="number" name="feature1" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label>Has Company? (1 = Yes, 0 = No)</label>
+      <input type="number" name="feature2" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Predict</button>
+  </form>
+
+  {% if prob %}
+    <div class="alert alert-info mt-3">
+      🧠 Predicted Conversion Probability: <strong>{{ prob }}%</strong>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
