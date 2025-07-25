@@ -12,10 +12,10 @@ const About = () => {
       <div className='my-10 flex flex-col md:flex-row gap-12'>
         <img className='w-full md:max-w-[360px]' src={assets.about_image} alt="" />
         <div className='flex flex-col justify-center gap-6 md:w-2/4 text-sm text-gray-600'>
-          <p>Welcome to Appointy, your trusted partner in managing your healthcare needs conveniently and efficiently. At Appointy, we understand the challenges individuals face when it comes to scheduling doctor appointments and managing their health records.</p>
-          <p>Appointy is committed to excellence in healthcare technology. We continuously strive to enhance our platform, integrating the latest advancements to improve user experience and deliver superior service. Whether you're booking your first appointment or managing ongoing care, Appointy is here to support you every step of the way.</p>
+          <p>Welcome to Doc Now, your trusted partner in managing your healthcare needs conveniently and efficiently. At Doc Now, we understand the challenges individuals face when it comes to scheduling doctor appointments and managing their health records.</p>
+          <p>Doc Now is committed to excellence in healthcare technology. We continuously strive to enhance our platform, integrating the latest advancements to improve user experience and deliver superior service. Whether you're booking your first appointment or managing ongoing care, Doc Now is here to support you every step of the way.</p>
           <b className='text-gray-800'>Our Vision</b>
-          <p>Our vision at Appointy is to create a seamless healthcare experience for every user. We aim to bridge the gap between patients and healthcare providers, making it easier for you to access the care you need, when you need it.</p>
+          <p>Our vision at Doc Now is to create a seamless healthcare experience for every user. We aim to bridge the gap between patients and healthcare providers, making it easier for you to access the care you need, when you need it.</p>
         </div>
       </div>
 

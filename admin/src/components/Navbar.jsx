@@ -19,7 +19,7 @@ const Navbar = () => {
   }
 
   const goToUserPanel = () => {
-    window.location.href = 'https://appointy-roan.vercel.app/'
+    window.location.href = 'http://localhost:5173/'
   }
 
   const isOnDashboard =
